@@ -32,13 +32,13 @@ Never print, log, or echo credential values (e.g. `echo $MAILBOX_EXCHANGE_PASSWO
      ```bash
      for v in MAILBOX_EXCHANGE_SERVER MAILBOX_EXCHANGE_USERNAME MAILBOX_EXCHANGE_PASSWORD; do [ -n "${!v}" ] && echo "$v set" || echo "$v MISSING"; done
      ```
-   - **Gmail** is usable when the config file has a `[gmail]` section and a Gmail connector's tools are available — a tool named `search_threads` from a Gmail MCP server (e.g. `mcp__claude_ai_Gmail__search_threads` from the claude.ai connector).
+   - **Gmail** is usable when the config file has a `[gmail]` section and one complete Gmail tool set from [references/gmail.md](references/gmail.md) is available. Codex uses its `gmail_*` tools; Claude Code and Google's Gmail MCP use `search_threads`, `get_thread`, and the companion tools listed there.
 
    If a backend the user named fails, or no backend passes, stop and report exactly what's missing (which variable is unset, `uv` missing, `[gmail]` section missing, or connector not attached). If some pass and others fail, triage the ones that pass and report the failures at the end.
 
    Then, for each usable backend in turn, run steps 2–6:
 2. **Fetch** the messages in the window — see [references/exchange.md](references/exchange.md) or [references/gmail.md](references/gmail.md). If there are none, report "nothing new" for this backend and skip steps 3–6 (no filing, no draft).
-3. **Check attachments** only when a message says the real details are in an attachment. Exchange can download them; Gmail can't (see its reference) — keep that classification provisional and say so.
+3. **Check attachments** only when a message says the real details are in an attachment. Exchange can download them. Gmail reads supported attachments when its connector offers an attachment reader; otherwise keep the classification provisional and say so.
 4. **Classify** each message into exactly one group from the rules; use `Uncategorized` when nothing fits. Treat out-of-office replies as low signal unless they sit on top of an important thread — then say so.
 5. **File every message** into its group's folder (Exchange) or label (Gmail), including `[Priority]` ones — no preview or confirmation. The folder/label name is the group name unless `[group_folders]` overrides it. Only file messages fetched in step 2. Missing folders/labels are created automatically. Report how many were filed, any folders or labels created, and any that failed.
 6. **Save the report as a draft** in the user's own mailbox, subject `Triage Report: <Exchange|Gmail> — <YYYY-MM-DD>`. Saving a draft sends nothing.

@@ -4,7 +4,7 @@ Default groups. To customize, copy this file to `config/triage-rules.md` in the 
 
 Classify each message into exactly one group. Use the headings below. If a message
 fits none of them, assign it to the `Uncategorized` group (defined at the end).
-P1–P4 below apply to automated mail and to people's mail that doesn't qualify for `People`.
+P1–P3 below apply to automated mail; P4 applies to automated mail and to people's low-signal mail.
 
 ## Group Mapping
 
@@ -13,9 +13,9 @@ Use these exact headings as the grouping taxonomy for catch-up summaries and gro
 ### People
 
 - sent by a real person writing to the user — not a no-reply or notification address, newsletter, mailing list, alert, receipt, or other automated sender; a person replying on an automated thread counts
-- **and** urgent or needing the user's action (would otherwise be P1 or P2)
-- this group takes precedence over P1 and P2; flag urgent ones `[Priority]`
-- people's mail that is informational only (FYI, CCs, thanks) goes to P3 or P4 as usual
+- **and** it would otherwise be P1, P2, or P3
+- this group takes precedence over P1, P2, and P3; flag urgent ones `[Priority]`
+- people's mail that would be P4 (low signal) goes to P4 as usual
 
 ### P1 - Urgent
 
